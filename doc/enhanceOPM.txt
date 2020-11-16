@@ -1,0 +1,81 @@
+*enhanceOPM.txt* enhancement of vim's build-in operator-pending mappings
+
+====================================================================
+CONTENTS                                       *enhanceOPM-contents*
+
+    1. Introduction ................ |enhanceOPM-introduction|
+    2. Usage ....................... |enhanceOPM-usage|
+    3. Advanced-Usage .............. |enhanceOPM-advanced-usage|
+    4. Functions ................... |enhanceOPM-functions|
+    5. Example ..................... |enhanceOPM-example|
+
+====================================================================
+INTRODUCTION                                   *enhanceOPM-introduction*
+
+This plugin offers opptions to improve vim's build-in operator-pending
+mappings. we can either modify build-in operator-pending mappings for better
+performance or add some extra text objects for vim.
+
+we mainly focus on one line enhancement.
+
+====================================================================
+USAGE                                          *enhanceOPM-usage*
+
+all you need to do is just call |enhanceOPM#EOPM()| to add text objects for
+operator-pending mappings.
+
+enhanceOPM supports `()`, `[]`, `{}`, `<>`, `*`, `,` by default.
+
+more details usage, please refer to |enhanceOPM-example|
+
+====================================================================
+ADVANCED-USAGE                                 *enhanceOPM-advanced-usage*
+
+you can define your own text objects by using |enhanceOPM#AddTextObj()|
+
+more details usage, please refer to |enhanceOPM-example|
+
+====================================================================
+FUNCTIONS                                      *enhanceOPM-functions*
+
+                                                *enhanceOPM#EOPM()*
+enhanceOPM#EOPM({char})
+            add text objects for vim.
+            {char} is either a paired stings or a single character.
+
+                                                *enhanceOPM#AddTextObj()*
+enhanceOPM#AddTextObj({char}, {range})
+            find the match area distinguished by {char}. 
+            {char} the character to be distinguished.
+            {range} to be included or around. the accepted values are:
+                'i' represents for 'inside', inside the {char}
+                'a' represents for 'around', around the {char}
+
+====================================================================
+EXAMPLE                                        *enhanceOPM-example*
+
+* below command modify vim's build-in operator-pending mappings:
+>
+    call enhanceOPM#EOPM('()')
+<
+now you type `di(`,`da(`,`di)`,`da)`or other commands, enhanceOPM will
+automatically find the closest curly brackets and delete inside/around them.
+
+* below command add a text object:
+>
+    call enhanceOPM#EOPM('*')
+<
+and then you can manipulate content inside/around `*`.
+
+* below command define personal text object:
+>
+    onoremap in) :<c-u>call enhanceOPM#AddTextObj('()','i')<CR>
+    onoremap ar* :<c-u>call enhanceOPM#AddTextObj('*','a')<CR>
+>
+now you can type `din)`or `dar*`(or others commands) to see the results.
+
+
+
+
+
+
