@@ -24,7 +24,7 @@ USAGE                                          *enhanceOPM-usage*
 all you need to do is just call |enhanceOPM#EOPM()| to add text objects for
 operator-pending mappings.
 
-enhanceOPM supports `()`, `[]`, `{}`, `<>`, `*`, `,` by default.
+enhanceOPM supports `()`, `[]`, `<>`, `*`, `,` by default.
 
 more details usage, please refer to |enhanceOPM-example|
 
