@@ -1,7 +1,7 @@
 ## enhanceOPM
 enhanceOPM enables us to define our own text objects, and will automatically find the closest area distinguished by a text object.
 
-it is similar to [targets.vim], but with less power. 
+it is similar to [targets.vim], but with less power. \
 [targets.vim] is too flexible for me, and I personally believe that one line enhancement of vim's build-in operator-pending mappings is alreay enough.
 
 ## Install
@@ -26,7 +26,7 @@ call enhanceOPM#EOPM('()')
 " single charaters
 call enhanceOPM#EOPM('@')
 ```
-and now you can type `di(`,`da(`,`ci)`,`ca)`,`di@`,`da@` and other commands to see the effect.
+and now you can type `di(`,`da(`,`ci)`,`ca)`,`di@`,`da@` and other commands to see the effect. \
 **notice**: make sure current line contains charaters like `(xxx)` and `@xxx@`
 
 ## Advanced Usage
