@@ -48,7 +48,9 @@ fun! s:searchPairChar(lhs,rhs)
             endif
         elseif curChar ==? a:rhs
             let pairLeftCount -= 1
-            if pairLeftCount ==? 0
+            if pairLeftCount ==? -1
+                let pairLeftCount = 0
+            elseif pairLeftCount ==? 0
                 let postPos[2] = pos + 1
                 break
             endif
@@ -161,17 +163,15 @@ fun! enhanceOPM#AddTextObj(char, range) abort
             call setpos('.', prePos)
             if a:range ==? 'i'
                 if offset ==? 1
-                    call utils#insertStr('xx')
-                    let offset += 2
-                elseif offset ==? 2
-                    call utils#insertStr('x')
+                    " todo::fix bugs for yi
+                    call utils#insertStr(' ')
                     let offset += 1
                 endif
                 let offset -= 2
                 let prePos[2] += 1
                 call setpos('.', prePos)
             endif
-            execute printf("normal! v%sl", offset)
+            execute printf("normal! %s", offset == 0 ? 'v' : 'v'.offset.'l' )
         else
             " handle cross lines
             if len(a:char) ==? 2
