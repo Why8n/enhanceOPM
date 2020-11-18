@@ -126,21 +126,20 @@ fun! enhanceOPM#AddTextObj(char, range) abort
     if exists('l:prePos') && exists('l:postPos')
         if prePos[2] < postPos[2]
             let offset = postPos[2] - prePos[2]
-            if a:range ==? 'a'
-                call setpos('.', prePos)
-                execute printf("normal! v%sl", offset)
-            else
+            call setpos('.', prePos)
+            if a:range ==? 'i'
                 if offset ==? 1
-                    return
+                    call utils#insertStr('xx')
+                    let offset += 2
                 elseif offset ==? 2
-                    let offset = 1
-                else
-                    let offset = postPos[2] - prePos[2] - 2
+                    call utils#insertStr('x')
+                    let offset += 1
                 endif
+                let offset -= 2
                 let prePos[2] += 1
                 call setpos('.', prePos)
-                execute printf("normal! v%sl", offset)
             endif
+            execute printf("normal! v%sl", offset)
         endif
     endif
 
@@ -161,5 +160,4 @@ fun! enhanceOPM#EOPM(char)
         silent! execute printf("onoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", a:char, a:char)
     endif
 endf
-
 

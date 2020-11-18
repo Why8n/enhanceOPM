@@ -7,3 +7,9 @@ fun! utils#getChar(lineStr, colPos)
     return a:lineStr[a:colPos]
 endf
 
+fun! utils#insertStr(str)
+    let tmp = @a
+    let @a = a:str
+    execute 'normal! "ap'
+    let @a = tmp
+endf
