@@ -16,7 +16,7 @@ Plug 'Why8n/enhanceOPM'
 ```
 
 ## Usage
-by default, enhanceOPM supports charaters `()`, `[]`, `<>`, `*`, `,`.
+by default, enhanceOPM supports charaters `()`, `[]`, `<>`, `{}`, `*`, `,`.
 
 you can define your own charaters like below:
 ```vim

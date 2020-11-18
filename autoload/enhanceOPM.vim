@@ -15,7 +15,7 @@ fun! s:searchPairChar(lhs,rhs)
         let pos -= 1
     endif
     " found left
-    while pos >= 0
+    while pos >=? 0
         let curChar = utils#getChar(lineStr, pos)
         if curChar ==? a:lhs
             let pairLeftCount += 1
@@ -77,7 +77,7 @@ fun! s:searchSingleChar(char)
         let pos -= 1
     endif
 
-    while pos >= 0
+    while pos >=? 0
         if utils#getChar(lineStr, pos) ==? a:char
             let prePos[2] = pos + 1
             break
@@ -109,13 +109,45 @@ fun! s:searchSingleChar(char)
     return [prePos, postPos]
 endf
 
+fun! s:traverse2Char(lhs, rhs) 
+    let lineStr = getline('.')
+    let endCol = col('$') - 1
+    let curCol = col('.') - 1
+    let pos = curCol
+    " traverse left
+    while pos >=? 0
+        if utils#getChar(lineStr, pos) ==? a:rhs
+            break
+        endif
+        if utils#getChar(lineStr, pos) ==? a:lhs
+            let ret = pos + 1
+            break
+        endif
+        let pos -= 1
+    endwhile
 
+    if !exists('l:ret')
+        " traverse right
+        let pos = curCol
+        while pos <? endCol
+            let curChar = utils#getChar(lineStr, pos)
+            if curChar ==? a:lhs || curChar ==? a:rhs
+                let ret = pos + 1
+                break
+            endif
+            let pos += 1
+        endwhile
+    endif
+    return exists('l:ret') ? ret : -1
+endf
 
 fun! enhanceOPM#AddTextObj(char, range) abort
     " let [vStart, vEnd] = s:backupVisualSelectionArea()
 
     if len(a:char) ==? 2
-        let [prePos, postPos] = s:searchPairChar(utils#getChar(a:char, 0), utils#getChar(a:char, 1))
+        let lhs = utils#getChar(a:char, 0)
+        let rhs = utils#getChar(a:char, 1)
+        let [prePos, postPos] = s:searchPairChar(lhs, rhs)
     elseif len(a:char) ==? 1
         let [prePos, postPos] = s:searchSingleChar(a:char)
     else
@@ -140,6 +172,17 @@ fun! enhanceOPM#AddTextObj(char, range) abort
                 call setpos('.', prePos)
             endif
             execute printf("normal! v%sl", offset)
+        else
+            " handle cross lines
+            if len(a:char) ==? 2
+                let pos = s:traverse2Char(lhs, rhs) 
+                if pos != -1
+                    let curPos = getpos('.')
+                    let curPos[2] = pos
+                    call setpos('.', curPos)
+                    execute printf("normal! v%s%s", a:range, utils#getChar(a:char, 0))
+                endif
+            endif
         endif
     endif
 
@@ -160,4 +203,3 @@ fun! enhanceOPM#EOPM(char)
         silent! execute printf("onoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", a:char, a:char)
     endif
 endf
-

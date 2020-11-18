@@ -22,7 +22,7 @@ set cpo&vim
 " endf
 
 
-for tob in ['()', '[]', '<>', '*', ',']
+for tob in ['()', '[]', '<>', '{}', '*', ',']
     call enhanceOPM#EOPM(tob)
 endfor
 
