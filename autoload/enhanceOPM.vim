@@ -159,7 +159,10 @@ fun! enhanceOPM#AddTextObj(char, range) abort
 
     if exists('l:prePos') && exists('l:postPos')
         if prePos[2] < postPos[2]
-            let offset = postPos[2] - prePos[2]
+            " caculate characters length between lhs and rhs
+            let offset = strchars(getline('.')[prePos[2]:postPos[2] - prePos[2]])
+            " rhs - lhs
+            let offset += 1
             call setpos('.', prePos)
             if a:range ==? 'i'
                 if offset ==? 1
