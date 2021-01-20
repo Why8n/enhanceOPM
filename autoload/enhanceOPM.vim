@@ -196,13 +196,19 @@ fun! enhanceOPM#EOPM(char)
     if len(a:char) ==? 2
         let lhs = a:char[0]
         let rhs = a:char[1]
-        silent! execute printf("onoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", lhs, a:char)
-        silent! execute printf("onoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", lhs, a:char)
+        silent! execute printf("vnoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", lhs, a:char)
+        silent! execute printf("vnoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", lhs, a:char)
+        silent! execute printf("onoremap <silent> i%s :normal Vi%s<CR>", lhs, lhs)
+        silent! execute printf("onoremap <silent> a%s :normal Va%s<CR>", lhs, lhs)
 
-        silent! execute printf("onoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", rhs, a:char)
-        silent! execute printf("onoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", rhs, a:char)
+        silent! execute printf("vnoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", rhs, a:char)
+        silent! execute printf("vnoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", rhs, a:char)
+        silent! execute printf("onoremap <silent> i%s :normal Vi%s<CR>", rhs, rhs)
+        silent! execute printf("onoremap <silent> a%s :normal Va%s<CR>", rhs, rhs)
     else
-        silent! execute printf("onoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", a:char, a:char)
-        silent! execute printf("onoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", a:char, a:char)
+        silent! execute printf("vnoremap <silent> i%s :<c-u>call enhanceOPM#AddTextObj('%s', 'i')<CR>", a:char, a:char)
+        silent! execute printf("vnoremap <silent> a%s :<c-u>call enhanceOPM#AddTextObj('%s', 'a')<CR>", a:char, a:char)
+        silent! execute printf("onoremap <silent> i%s :normal Vi%s<CR>", a:char, a:char)
+        silent! execute printf("onoremap <silent> a%s :normal Va%s<CR>", a:char, a:char)
     endif
 endf
